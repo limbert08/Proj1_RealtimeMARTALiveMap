@@ -4,6 +4,7 @@ Project Title: Visual UI for MARTA
 
 Team Members:
 Daryl Bilderback
+Nic Branker
 Limbert Bontigao
 Gene Cannella
 Thomas Gentle
