@@ -26,3 +26,14 @@ Rough Breakdown of Tasks:
 3) Call the MARTA API to populate the a Database (ex. Firebase)
 
 4) UI will call the Firebase Database to display the Graphical interface
+
+
+1/13/18 Update
+Ideas and items to consider:
+- Using SVG JS to animate the map
+  - Create HTML Canvas and use JS for train animation
+  - Make items on this map clickable (for station select)
+- Make sure trains are never double counted
+  - Pull train ID's to see if any station lists the same station as a prior one
+
+
