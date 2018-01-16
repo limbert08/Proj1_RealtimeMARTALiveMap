@@ -1,0 +1,350 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Subway Map</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="assets/js/map.js"></script>
+    <script type="text/javascript" src="assets/js/response.js"></script>
+    <style type="text/css">
+    body
+    {
+        font-family: Verdana;
+        font-size: 8pt;
+    }
+
+    /* The main DIV for the map */
+    .subway-map
+    {
+        margin: 0;
+        width: 500px;
+        height:410px;
+        background-color: white;
+    }
+
+    /* Text labels */
+    .text
+    {
+        text-decoration: none;
+        color: black;
+    }
+
+    #legend
+    {
+        float: left;
+        width: 250px;
+        height:100px;
+    }
+
+    #legend div
+    {
+        height: 25px;
+    }
+
+    #legend span
+    {
+        margin: 5px 5px 5px 0;
+    }
+    .subway-map span
+    {
+        margin: 5px 5px 5px 0;
+    }
+ 
+    </style>
+</head>
+<body>
+    <div class="trainRoutes" style="display:none" id="trainRoutes" data-columns="12" data-rows="10" data-cellSize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="8">
+
+    </div>
+    <div class="subway-map" data-columns="12" data-rows="10" data-cellSize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="8">
+        
+        <!-- Red Line -->
+        <ul data-color="#ff0000" id="RED" class="RED" data-label="MARTA Red Line">      
+            <li data-coords="5.5,.4" class="stations" data-marker="@interchange" data-station="NORTH SPRINGS STATION" data-labelPos="W"><a href="#">North Springs</a></li> 
+            <li data-coords="5.7,.9" data-dir="S" data-marker="interchange"></li>
+            <li data-coords="5.7,.9" class="stations" data-marker="interchange" data-station="SANDY SPRINGS STATION" data-labelPos="W"><a href="#">Sandy Springs</a></li>
+            <li data-coords="5.9,1.4" class="stations" data-marker="interchange" data-station="DUNWOODY STATION" data-labelPos="W"><a href="#">Dunwoody</a></li>
+            <li data-coords="5.75,1.9" class="stations" data-marker="interchange" data-station="MEDICAL CENTER STATION" data-labelPos="W"><a href="#">Medical Center</a></li>
+            <li data-coords="5.5,2.9" class="stations" data-marker="interchange" data-station="BUCKHEAD STATION" data-labelPos="W"><a href="#">Buckhead</a></li>
+            <li data-coords="5.2,3.6" class="stations" data-marker="interchange" data-station="LINDBERGH STATION" data-labelPos="W"><a href="#">Lindbergh Center</a></li>
+            <li data-coords="4.85,4.3" class="stations" data-marker="interchange" data-station="ARTS CENTER STATION" data-labelPos="W"><a href="#">Arts Center</a></li>
+            <li data-coords="4.85,4.5" class="stations" data-marker="interchange" data-station="MIDTOWN STATION" data-labelPos="W"><a href="#">Midtown</a></li>
+            <li data-coords="4.85,4.9" class="stations" data-marker="interchange" data-station="NORTH AVENUE STATION" data-labelPos="W"><a href="#">North Avenue</a></li>
+            <li data-coords="4.85,5.2" class="stations" data-marker="interchange" data-station="CIVIC CENTER STATION" data-labelPos="W"><a href="#">Civic Center</a></li>
+            <li data-coords="4.85,5.6" class="stations" data-marker="interchange" data-station="PEACHTREE CENTER STATION" data-labelPos="W"><a href="#">Peachtree Center</a></li> 
+            <li data-coords="4.85,6" class="stations" data-marker="interchange" data-station="FIVE POINTS STATION" data-labelPos="W"><a href="#">Five Points</a></li>
+            <li data-coords="4.6,6.45" data-dir="S" data-marker="interchange"></li>
+            <li data-coords="4.6,6.45" class="stations" data-marker="@interchange" data-station="GARNETT STATION" data-labelPos="W"><a href="#">Garnett</a></li>
+            <li data-coords="4.25,6.9" class="stations" data-marker="interchange" data-station="WEST END STATION" data-labelPos="W"><a href="#">West End</a></li>
+            <li data-coords="4.25,7.25" class="stations" data-marker="interchange" data-station="OAKLAND CITY STATION" data-labelPos="W"><a href="#">Oakland City</a></li>
+            <li data-coords="4.25,7.55" class="stations" data-marker="interchange" data-station="LAKEWOOD STATION" data-labelPos="W"><a href="#">Lakewood/Fort McPherson</a></li>
+            <li data-coords="4.25,7.85" class="stations" data-marker="interchange" data-station="EAST POINT STATION" data-labelPos="W"><a href="#">East Point</a></li>
+            <li data-coords="4.25,8.35" class="stations" data-marker="interchange" data-station="COLLEGE PARK STATION" data-labelPos="W"><a href="#">College Park</a></li>
+            <li data-coords="4.50,9.1" class="stations" data-marker="interchange" data-station="AIRPORT STATION" data-labelPos="W"><a href="#">Airport</a></li>  
+        </ul>
+        <!-- Gold Line -->
+        <ul data-color="#ffd700" class="GOLD" data-label="MARTA Gold Line">
+            <li data-coords="6.8,2.1" class="stations" data-marker="@interchange" data-station="DORAVILLE STATION" data-labelPos="W"><a href="#">Doraville</a></li>
+            <li data-coords="6.45,2.45" class="stations" data-marker="interchange" data-station="CHAMBLEE STATION" data-labelPos="W"><a href="#">Chamblee</a></li>
+            <li data-coords="6.15,2.65" class="stations" data-marker="interchange" data-station="BROOKHAVEN STATION" data-labelPos="W"><a href="#">Brookhaven</a></li>
+            <li data-coords="5.7,3.1" class="stations" data-marker="interchange" data-station="LENOX STATION" data-labelPos="W"><a href="#">Lenox</a></li>
+            <li data-coords="5.25,3.6" class="stations" data-marker="interchange" data-station="LINDBERGH STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,4.3" class="stations" data-marker="interchange" data-station="ARTS CENTER STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,4.5" class="stations" data-marker="interchange" data-station="MIDTOWN STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,4.9" class="stations" data-marker="interchange" data-station="NORTH AVENUE STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,5.2" class="stations" data-marker="interchange" data-station="CIVIC CENTER STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,5.6" class="stations" data-marker="interchange" data-station="PEACHTREE CENTER STATION" data-labelPos="W"></li> 
+            <li data-coords="4.90,6" class="stations" data-marker="interchange" data-station="FIVE POINTS STATION" data-labelPos="W"></li>
+            <li data-coords="4.65,6.45" data-dir="S" data-marker="interchange"></li>
+            <li data-coords="4.65,6.45" class="stations" data-marker="@interchange" data-station="GARNETT STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,6.9" class="stations" data-marker="interchange" data-station="WEST END STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,7.25" class="stations" data-marker="interchange" data-station="OAKLAND CITY STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,7.55" class="stations" data-marker="interchange" data-station="LAKEWOOD STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,7.85" class="stations" data-marker="interchange" data-station="EAST POINT STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,8.35" class="stations" data-marker="interchange" data-station="COLLEGE PARK STATION" data-labelPos="W"></li>
+            <li data-coords="4.55,9.1" class="stations" data-marker="interchange" data-station="AIRPORT STATION" data-labelPos="W"></li>  
+        </ul>
+        <!-- Blue Line -->
+        <ul data-color="#0000ff" class="BLUE" data-label="MARTA Blue Line">
+            <li data-coords="2.25,6.1" class="stations" data-marker="@interchange" data-station="HAMILTON E HOLMES STATION" data-labelPos="S"><a href="#">Hamilton E. Holmes</a></li>
+            <li data-coords="2.7,6.1" class="stations" data-marker="interchange" data-station="WEST LAKE STATION" data-labelPos="N"><a href="#">West Lake</a></li>
+            <li data-coords="3.6,6" class="stations" data-marker="interchange" data-station="ASHBY STATION" data-labelPos="S"><a href="#">Ashby</a></li>
+            <li data-coords="3.95,6" class="stations" data-marker="interchange" data-station="VINE CITY STATION" data-labelPos="N"><a href="#">Vine City</a></li>
+            <li data-coords="4.35,6" class="stations" data-marker="interchange" data-station="OMNI DOME STATION" data-labelPos="S"><a href="#">Dome/GWCC/Phillis Arena/CNN Center</a></li>
+            <li data-coords="4.9,6" class="stations" data-marker="interchange" data-station="FIVE POINTS STATION"></li>
+            <li data-coords="5.3,6" class="stations" data-marker="interchange" data-station="GEORGIA STATE STATION" data-labelPos="S"><a href="#">Georgia State</a></li>
+            <li data-coords="5.6,6" class="stations" data-marker="interchange" data-station="KING MEMORIAL STATION" data-labelPos="N"><a href="#">King Memorial</a></li>
+            <li data-coords="5.9,6" class="stations" data-marker="interchange" data-station="INMAN PARK STATION" data-labelPos="S"><a href="#">Inman Park/Reynoldstown</a></li>
+            <li data-coords="6.35,6" class="stations" data-marker="interchange" data-station="EDGEWOOD STATION" data-labelPos="N"><a href="#">Edgewood/Candilier Park</a></li>
+            <li data-coords="6.75,6.1" class="stations" data-marker="interchange" data-station="EAST LAKE STATION" data-labelPos="S"><a href="#">East Lake</a></li>
+            <li data-coords="7.2,6.1" class="stations" data-marker="interchange" data-station="DECATUR STATION" data-labelPos="N"><a href="#">Decatur</a></li>
+            <li data-coords="7.6,6.1" class="stations" data-marker="interchange" data-station="AVONDALE STATION" data-labelPos="S"><a href="#">Avondale</a></li>
+            <li data-coords="7.9,6.1" class="stations" data-marker="interchange" data-station="KENNSINGTON STATION" data-labelPos="N"><a href="#">Kennsington</a></li>
+            <li data-coords="8.4,6.1" class="stations" data-marker="interchange" data-station="INDIAN CREEK STATION" data-labelPos="S"><a href="#">Indian Creek</a></li>
+        </ul>
+        <!-- Green Line -->
+        <ul data-color="#00ff00" class="GREEN" data-label="MARTA Green Line">
+            <li data-coords="3,5.4" class="stations" data-marker="@interchange" data-station="" data-labelPos="W"><a href="#">Bankhead</a></li>
+            <li data-coords="3.6,5.95" class="stations" data-marker="interchange" data-station="ASHBY STATION" data-labelPos="S"></li>
+            <li data-coords="3.95,5.95" class="stations" data-marker="interchange" data-station="VINE CITY STATION" data-labelPos="N"></li>
+            <li data-coords="4.35,5.95" class="stations" data-marker="interchange" data-station="OMNI DOME STATION" data-labelPos="S"></li>
+            <li data-coords="4.9,5.95" class="stations" data-marker="interchange" data-station="FIVE POINTS STATION"></li>
+            <li data-coords="5.3,5.95" class="stations" data-marker="interchange" data-station="GEORGIA STATE STATION" data-labelPos="S"></li>
+            <li data-coords="5.6,5.95" class="stations" data-marker="interchange" data-station="KING MEMORIAL STATION" data-labelPos="N"></li>
+            <li data-coords="5.9,5.95" class="stations" data-marker="interchange" data-station="INMAN PARK STATION" data-labelPos="S"></li>
+            <li data-coords="6.35,5.95" class="stations" data-marker="interchange" data-station="EDGEWOOD STATION" data-labelPos="N"></li>
+        </ul>
+    </div>
+    <div class="invisibleMap" style="display:none" data-columns="12" data-rows="10" data-cellSize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="8">
+        <!-- Red Line -->
+        <ul data-color="#000000" id="redTrain" class="redTrain" data-label="Train A">      
+            <li data-coords="5.5,.4" class="stations" data-station="NORTH SPRINGS STATION" data-labelPos="W"> </li> 
+            <li data-coords="5.7,.9" data-dir="S"></li>
+            <li data-coords="5.7,.9" class="stations" data-station="SANDY SPRINGS STATION" data-labelPos="W"> </li>
+            <li data-coords="5.9,1.4" class="stations" data-station="DUNWOODY STATION" data-labelPos="W"> </li>
+            <li data-coords="5.75,1.9" class="stations" data-station="MEDICAL CENTER STATION" data-labelPos="W"> </li>
+            <li data-coords="5.5,2.9" class="stations" data-station="BUCKHEAD STATION" data-labelPos="W"> </li>
+            <li data-coords="5.2,3.6" class="stations" data-station="LINDBERGH STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,4.3" class="stations" data-station="ARTS CENTER STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,4.5" class="stations" data-station="MIDTOWN STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,4.9" class="stations" data-station="NORTH AVENUE STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,5.2" class="stations" data-station="CIVIC CENTER STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,5.6" class="stations" data-station="PEACHTREE CENTER STATION" data-labelPos="W"> </li> 
+            <li data-coords="4.85,6" class="stations" data-station="FIVE POINTS STATION" data-labelPos="W"> </li>
+            <li data-coords="4.6,6.45" data-dir="S"></li>
+            <li data-coords="4.6,6.45" class="stations" data-station="GARNETT STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,6.9" class="stations" data-station="WEST END STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,7.25" class="stations" data-station="OAKLAND CITY STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,7.55" class="stations" data-station="LAKEWOOD STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,7.85" class="stations" data-station="EAST POINT STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,8.35" class="stations" data-station="COLLEGE PARK STATION" data-labelPos="W"> </li>
+            <li data-coords="4.50,9.1" class="stations" data-station="AIRPORT STATION" data-labelPos="W"> </li>  
+        </ul>
+        <!-- Red Line Reversed -->
+        <ul data-color="#000000" id="redTrainRev" class="redTrain" data-label="Train B">      
+            <li data-coords="4.50,9.1" class="stations" data-station="AIRPORT STATION" data-labelPos="W"> </li> 
+            <li data-coords="4.25,8.35" class="stations" data-station="COLLEGE PARK STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,7.85" class="stations" data-station="EAST POINT STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,7.55" class="stations" data-station="LAKEWOOD STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,7.25" class="stations" data-station="OAKLAND CITY STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,6.9" class="stations" data-station="WEST END STATION" data-labelPos="W"> </li>
+            <li data-coords="4.6,6.45" class="stations" data-station="GARNETT STATION" data-labelPos="W"> </li>
+            <li data-coords="4.6,6.45" data-dir="S"></li>
+            <li data-coords="4.85,6" class="stations" data-station="FIVE POINTS STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,5.6" class="stations" data-station="PEACHTREE CENTER STATION" data-labelPos="W"> </li> 
+            <li data-coords="4.85,5.2" class="stations" data-station="CIVIC CENTER STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,4.9" class="stations" data-station="NORTH AVENUE STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,4.5" class="stations" data-station="MIDTOWN STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,4.3" class="stations" data-station="ARTS CENTER STATION" data-labelPos="W"> </li>
+            <li data-coords="5.2,3.6" class="stations" data-station="LINDBERGH STATION" data-labelPos="W"> </li>
+            <li data-coords="5.5,2.9" class="stations" data-station="BUCKHEAD STATION" data-labelPos="W"> </li>
+            <li data-coords="5.75,1.9" class="stations" data-station="MEDICAL CENTER STATION" data-labelPos="W"> </li>
+            <li data-coords="5.9,1.4" class="stations" data-station="DUNWOODY STATION" data-labelPos="W"> </li>
+            <li data-coords="5.7,.9" class="stations" data-station="SANDY SPRINGS STATION" data-labelPos="W"> </li>
+            <li data-coords="5.7,.9" data-dir="S"></li>
+            <li data-coords="5.5,.4" class="stations" data-station="NORTH SPRINGS STATION" data-labelPos="W"> </li>
+        </ul>
+        <!-- Gold Line -->
+        <ul data-color="#ffd700" id="goldTrain" class="goldTrain" data-label="Train C">
+            <li data-coords="6.8,2.1" class="stations" data-station="DORAVILLE STATION" data-labelPos="W"> </li>
+            <li data-coords="6.45,2.45" class="stations" data-station="CHAMBLEE STATION" data-labelPos="W"> </li>
+            <li data-coords="6.15,2.65" class="stations" data-station="BROOKHAVEN STATION" data-labelPos="W"> </li>
+            <li data-coords="5.7,3.1" class="stations" data-station="LENOX STATION" data-labelPos="W"> </li>
+            <li data-coords="5.25,3.6" class="stations" data-station="LINDBERGH STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,4.3" class="stations" data-station="ARTS CENTER STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,4.5" class="stations" data-station="MIDTOWN STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,4.9" class="stations" data-station="NORTH AVENUE STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,5.2" class="stations" data-station="CIVIC CENTER STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,5.6" class="stations" data-station="PEACHTREE CENTER STATION" data-labelPos="W"></li> 
+            <li data-coords="4.90,6" class="stations" data-station="FIVE POINTS STATION" data-labelPos="W"></li>
+            <li data-coords="4.65,6.45" data-dir="S"></li>
+            <li data-coords="4.65,6.45" class="stations" data-station="GARNETT STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,6.9" class="stations" data-station="WEST END STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,7.25" class="stations" data-station="OAKLAND CITY STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,7.55" class="stations" data-station="LAKEWOOD STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,7.85" class="stations" data-station="EAST POINT STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,8.35" class="stations" data-station="COLLEGE PARK STATION" data-labelPos="W"></li>
+            <li data-coords="4.55,9.1" class="stations" data-station="AIRPORT STATION" data-labelPos="W"></li>  
+        </ul>
+        <!-- Gold Line Reverse -->
+        <ul data-color="#ffd700" id="goldTrain" class="goldTrain" data-label="Train C">
+            <li data-coords="4.55,9.1" class="stations" data-station="AIRPORT STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,8.35" class="stations" data-station="COLLEGE PARK STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,7.85" class="stations" data-station="EAST POINT STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,7.55" class="stations" data-station="LAKEWOOD STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,7.25" class="stations" data-station="OAKLAND CITY STATION" data-labelPos="W"></li>
+            <li data-coords="4.30,6.9" class="stations" data-station="WEST END STATION" data-labelPos="W"></li>
+            <li data-coords="4.65,6.45" class="stations" data-station="GARNETT STATION" data-labelPos="W"></li>
+            <li data-coords="4.65,6.45" data-dir="S"></li>
+            <li data-coords="4.90,6" class="stations" data-station="FIVE POINTS STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,5.6" class="stations" data-station="PEACHTREE CENTER STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,5.2" class="stations" data-station="CIVIC CENTER STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,4.9" class="stations" data-station="NORTH AVENUE STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,4.5" class="stations" data-station="MIDTOWN STATION" data-labelPos="W"></li>
+            <li data-coords="4.90,4.3" class="stations" data-station="ARTS CENTER STATION" data-labelPos="W"></li>
+            <li data-coords="5.25,3.6" class="stations" data-station="LINDBERGH STATION" data-labelPos="W"></li>
+            <li data-coords="5.7,3.1" class="stations" data-station="LENOX STATION" data-labelPos="W"> </li>
+            <li data-coords="6.15,2.65" class="stations" data-station="BROOKHAVEN STATION" data-labelPos="W"> </li>
+            <li data-coords="6.45,2.45" class="stations" data-station="CHAMBLEE STATION" data-labelPos="W"> </li>
+            <li data-coords="6.8,2.1" class="stations" data-station="DORAVILLE STATION" data-labelPos="W"> </li>  
+        </ul>
+        <!-- Blue Line -->
+        <ul data-color="#0000ff" id="blueTrain" class="blueTrain" data-label="Train D">
+            <li data-coords="2.25,6.1" class="stations" data-station="HAMILTON E HOLMES STATION" data-labelPos="S"> </li>
+            <li data-coords="2.7,6.1" class="stations" data-station="WEST LAKE STATION" data-labelPos="N"> </li>
+            <li data-coords="3.6,6" class="stations" data-station="ASHBY STATION" data-labelPos="S"> </li>
+            <li data-coords="3.95,6" class="stations" data-station="VINE CITY STATION" data-labelPos="N"> </li>
+            <li data-coords="4.35,6" class="stations" data-station="OMNI DOME STATION" data-labelPos="S"> </li>
+            <li data-coords="4.9,6" class="stations" data-station="FIVE POINTS STATION"></li>
+            <li data-coords="5.3,6" class="stations" data-station="GEORGIA STATE STATION" data-labelPos="S"> </li>
+            <li data-coords="5.6,6" class="stations" data-station="KING MEMORIAL STATION" data-labelPos="N"> </li>
+            <li data-coords="5.9,6" class="stations" data-station="INMAN PARK STATION" data-labelPos="S"> </li>
+            <li data-coords="6.35,6" class="stations" data-station="EDGEWOOD STATION" data-labelPos="N"> </li>
+            <li data-coords="6.75,6.1" class="stations" data-station="EAST LAKE STATION" data-labelPos="S"> </li>
+            <li data-coords="7.2,6.1" class="stations" data-station="DECATUR STATION" data-labelPos="N"> </li>
+            <li data-coords="7.6,6.1" class="stations" data-station="AVONDALE STATION" data-labelPos="S"> </li>
+            <li data-coords="7.9,6.1" class="stations" data-station="KENNSINGTON STATION" data-labelPos="N"> </li>
+            <li data-coords="8.4,6.1" class="stations" data-station="INDIAN CREEK STATION" data-labelPos="S"> </li>
+        </ul>
+        <!-- Blue Line Reversed -->
+        <ul data-color="#0000ff" id="blueTrain" class="blueTrain" data-label="Train D">
+            <li data-coords="8.4,6.1" class="stations" data-station="INDIAN CREEK STATION" data-labelPos="S"> </li>
+            <li data-coords="7.9,6.1" class="stations" data-station="KENNSINGTON STATION" data-labelPos="N"> </li>
+            <li data-coords="7.6,6.1" class="stations" data-station="AVONDALE STATION" data-labelPos="S"> </li>
+            <li data-coords="7.2,6.1" class="stations" data-station="DECATUR STATION" data-labelPos="N"> </li>
+            <li data-coords="6.75,6.1" class="stations" data-station="EAST LAKE STATION" data-labelPos="S"> </li>
+            <li data-coords="6.35,6" class="stations" data-station="EDGEWOOD STATION" data-labelPos="N"> </li>
+            <li data-coords="5.9,6" class="stations" data-station="INMAN PARK STATION" data-labelPos="S"> </li>
+            <li data-coords="5.6,6" class="stations" data-station="KING MEMORIAL STATION" data-labelPos="N"> </li>
+            <li data-coords="5.3,6" class="stations" data-station="GEORGIA STATE STATION" data-labelPos="S"> </li>
+            <li data-coords="4.9,6" class="stations" data-station="FIVE POINTS STATION"></li>
+            <li data-coords="4.35,6" class="stations" data-station="OMNI DOME STATION" data-labelPos="S"> </li>
+            <li data-coords="3.95,6" class="stations" data-station="VINE CITY STATION" data-labelPos="N"> </li>
+            <li data-coords="3.6,6" class="stations" data-station="ASHBY STATION" data-labelPos="S"> </li>
+            <li data-coords="2.7,6.1" class="stations" data-station="WEST LAKE STATION" data-labelPos="N"> </li>
+            <li data-coords="2.25,6.1" class="stations" data-station="HAMILTON E HOLMES STATION" data-labelPos="S"> </li>
+        </ul>
+        <!-- Green Line -->
+        <ul data-color="#00ff00" id="greenTrain" class="greenTrain" data-label="Train E">
+            <li data-coords="3,5.4" class="stations" data-station="BANKHEAD STATION" data-labelPos="W"> </li>
+            <li data-coords="3.6,5.95" class="stations" data-station="ASHBY STATION" data-labelPos="S"></li>
+            <li data-coords="3.95,5.95" class="stations" data-station="VINE CITY STATION" data-labelPos="N"></li>
+            <li data-coords="4.35,5.95" class="stations" data-station="OMNI DOME STATION" data-labelPos="S"></li>
+            <li data-coords="4.9,5.95" class="stations" data-station="FIVE POINTS STATION"></li>
+            <li data-coords="5.3,5.95" class="stations" data-station="GEORGIA STATE STATION" data-labelPos="S"></li>
+            <li data-coords="5.6,5.95" class="stations" data-station="KING MEMORIAL STATION" data-labelPos="N"></li>
+            <li data-coords="5.9,5.95" class="stations" data-station="INMAN PARK STATION" data-labelPos="S"></li>
+            <li data-coords="6.35,5.95" class="stations" data-station="EDGEWOOD STATION" data-labelPos="N"></li>
+        </ul>
+        <!-- Green Line Reversed -->
+        <ul data-color="#00ff00" id="greenTrain" class="greenTrain" data-label="Train E">
+            <li data-coords="6.35,5.95" class="stations" data-station="EDGEWOOD STATION" data-labelPos="N"></li>
+            <li data-coords="5.9,5.95" class="stations" data-station="INMAN PARK STATION" data-labelPos="S"></li>
+            <li data-coords="5.6,5.95" class="stations" data-station="KING MEMORIAL STATION" data-labelPos="N"></li>
+            <li data-coords="5.3,5.95" class="stations" data-station="GEORGIA STATE STATION" data-labelPos="S"></li>
+            <li data-coords="4.9,5.95" class="stations" data-station="FIVE POINTS STATION"></li>
+            <li data-coords="4.35,5.95" class="stations" data-station="OMNI DOME STATION" data-labelPos="S"></li>
+            <li data-coords="3.95,5.95" class="stations" data-station="VINE CITY STATION" data-labelPos="N"></li>
+            <li data-coords="3.6,5.95" class="stations" data-station="ASHBY STATION" data-labelPos="S"></li>
+            <li data-coords="3,5.4" class="stations" data-station="BANKHEAD STATION" data-labelPos="W"> </li>
+            
+        </ul>
+    </div>
+    <!--<div class="invisibleMap" id="redRoute" style="display:none" data-columns="12" data-rows="10" data-cellSize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="8">
+        <ul data-color="#000000" id="redTrain" class="redTrain" data-label="redTrain">      
+            <li data-coords="5.5,.4" class="stations" data-station="NORTH SPRINGS STATION" data-labelPos="W"> </li> 
+            <li data-coords="5.7,.9" data-dir="S"></li>
+            <li data-coords="5.7,.9" class="stations" data-station="SANDY SPRINGS STATION" data-labelPos="W"> </li>
+            <li data-coords="5.9,1.4" class="stations" data-station="DUNWOODY STATION" data-labelPos="W"> </li>
+            <li data-coords="5.75,1.9" class="stations" data-station="MEDICAL CENTER STATION" data-labelPos="W"> </li>
+            <li data-coords="5.5,2.9" class="stations" data-station="BUCKHEAD STATION" data-labelPos="W"> </li>
+            <li data-coords="5.2,3.6" class="stations" data-station="LINDBERGH STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,4.3" class="stations" data-station="ARTS CENTER STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,4.5" class="stations" data-station="MIDTOWN STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,4.9" class="stations" data-station="NORTH AVENUE STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,5.2" class="stations" data-station="CIVIC CENTER STATION" data-labelPos="W"> </li>
+            <li data-coords="4.85,5.6" class="stations" data-station="PEACHTREE CENTER STATION" data-labelPos="W"> </li> 
+            <li data-coords="4.85,6" class="stations" data-station="FIVE POINTS STATION" data-labelPos="W"> </li>
+            <li data-coords="4.6,6.45" data-dir="S"></li>
+            <li data-coords="4.6,6.45" class="stations" data-station="GARNETT STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,6.9" class="stations" data-station="WEST END STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,7.25" class="stations" data-station="OAKLAND CITY STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,7.55" class="stations" data-station="LAKEWOOD STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,7.85" class="stations" data-station="EAST POINT STATION" data-labelPos="W"> </li>
+            <li data-coords="4.25,8.35" class="stations" data-station="COLLEGE PARK STATION" data-labelPos="W"> </li>
+            <li data-coords="4.50,9.1" class="stations" data-station="AIRPORT STATION" data-labelPos="W"> </li>  
+        </ul>
+    </div>
+    -->
+    <div id="legend"></div>
+    <script type="text/javascript">
+        $(".subway-map").subwayMap({ debug: false });
+        var response = {};
+        response = getResponse();
+        console.log(response);
+        //var elTemp = $('<div>').append($('#redRoute').clone()).html();
+        //var el = $(elTemp);
+        //drawTrainRoute(el);
+        $(document).ready(function() {
+            $('.canvas').on('click', function(e) {
+            var x = e.clientX
+              , y = e.clientY
+            //...
+            var stations = JSON.parse(localStorage.getItem("stations"));
+            console.log(stations);      
+
+                for (z = 0; z < stations.length; z++) {
+                    var isClicked = isInCircle(stations[z][0], stations[z][1], stations[z][2], x, y);
+                    if (isClicked == true) {
+                        console.log("Found It Clicked: " + stations[z][3]);
+                        var station = stations[z][3];
+                        z=999;
+                        getIncomingTrains(returnResponse, station);
+                        
+                    }
+                }
+            $('.trainRoutes').subwayMap({ debug: true });
+            $('.trainRoutes').css("display","block");    
+            });
+        });
+    </script>
+</body>
+</html>
