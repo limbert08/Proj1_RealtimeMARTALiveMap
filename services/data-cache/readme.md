@@ -5,6 +5,7 @@
 
 ## Inside this Directory, type the following commands:
 ```
-npm install firebase --prefix=./
-npm install jquery --prefix=./
+npm install firebase-admin --save
+npm install request --save
+npm install http --save
 ```
