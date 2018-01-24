@@ -33,9 +33,9 @@ $.ajax({
 
     $("img").attr("src", picImgUrl);
 
-    $("#atlweather").append("<br> The weather today in Atlanta is :  " + weatherDesc);
-    $("#atlweather").append("<br><br> Temperature is :  " + atlTemp + " deg F");
-    $("#atlweather").append("<br><br> Humidity is :  " + atlHumidity + "%");
+    $("#atlweather").append("<br><br> The weather today in Atlanta is :  " + weatherDesc);
+    $("#atlweather").append("<br> Temperature is :  " + atlTemp + " deg F");
+    $("#atlweather").append("<br> Humidity is :  " + atlHumidity + "%");
     //$("#atlweather").append("<br><br> Picture Image:  " + picImg);
     $("#atlweather").append("<br><br> Picture Image URL :  " + picImgUrl);
 
