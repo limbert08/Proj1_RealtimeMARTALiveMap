@@ -211,7 +211,7 @@ var stations = [];
                 });
                 if (nodes.length > 0)
                     self._drawLine(el, scale, rows, columns, color, (lineTextClass != "" ? lineTextClass : textClass), lineWidth, nodes, reverseMarkers);
-                $(ul).remove();
+                (el.context.id == "subwaymapinvisible") ? "" : $(ul).remove();;
             });
 
             if ((lineLabels.length > 0) && (legendId != ""))
@@ -351,10 +351,14 @@ var stations = [];
                 ctx.lineWidth = width;
                 if (data.markerInfo == "") {
                     ctx.arc(x, y, width * 0.7, 0, Math.PI * 2, true);
-                    var tempArr = [];
-                    tempArr.push(x, y, width, data['stationID'].toString(), data['x'].toString(), data['y'].toString(), data['line'].toString());
-                    stations.push(tempArr);
-                    console.log(stations);
+                    if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+
+                    } else {
+                        var tempArr = [];
+                        tempArr.push(x, y, width, data['stationID'].toString(), data['x'].toString(), data['y'].toString(), data['line'].toString());
+                        stations.push(tempArr);
+                        console.log(stations);
+                    }
                 }
                 else
                 {
@@ -427,7 +431,7 @@ var stations = [];
         }
         var style = (textClass != "" ? "class='" + textClass + "' " : "") + "style='" + (textClass == "" ? "font-size:8pt;font-family:Verdana,Arial,Helvetica,Sans Serif;text-decoration:none;" : "") + "width:100px;" + (pos != "" ? pos : "") + ";position:absolute;top:" + (y + el.offset().top - (topOffset > 0 ? topOffset : 0)) + "px;left:" + (x + el.offset().left) + "px;z-index:3000;'";
         if (data.link != "")
-            $("<a " + style + " title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "' target='_new'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
+            $("<a id="+ data.label.replace(/\s/g, "") + " " + style + " title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "' target='_images'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
         else
             $("<span " + style + ">" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
 

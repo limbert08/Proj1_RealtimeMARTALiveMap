@@ -2,9 +2,8 @@
 <head>
     <title>Subway Map</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.0.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-    <script type="text/javascript" src="assets/js/map.js"></script>
-    <script type="text/javascript" src="assets/js/response.js"></script>
+    <script type="text/javascript" src="assets/js/mapPlugin.js"></script>
+    <script type="text/javascript" src="assets/js/mapData.js"></script>
     <style type="text/css">
     body
     {
@@ -26,6 +25,17 @@
     {
         text-decoration: none;
         color: black;
+        font-size: 14px;
+        display: none;
+    }
+
+    #FivePoints {
+        transform: rotate(45DEG);
+        padding-right: 120px;
+    }
+
+    .visibleText {
+        display: all;
     }
 
     #legend
@@ -59,7 +69,7 @@
         
         <!-- Red Line -->
         <ul data-color="#ff0000" id="RED" class="RED" data-label="MARTA Red Line">      
-            <li data-coords="5.5,.4" class="stations" data-line="RED" data-marker="@interchange" data-station="NORTH SPRINGS STATION" data-labelPos="W"><a href="#">North Springs</a></li> 
+            <li data-coords="5.5,.4" class="stations" data-textClass="visibleText" data-line="RED" data-marker="@interchange" data-station="NORTH SPRINGS STATION" data-labelPos="W"><a href="#">North Springs</a></li> 
             <li data-coords="5.7,.9" data-dir="S" data-line="RED" data-marker="interchange"></li>
             <li data-coords="5.7,.9" class="stations" data-line="RED" data-marker="interchange" data-station="SANDY SPRINGS STATION" data-labelPos="W"><a href="#">Sandy Springs</a></li>
             <li data-coords="5.9,1.4" class="stations" data-line="RED" data-marker="interchange" data-station="DUNWOODY STATION" data-labelPos="W"><a href="#">Dunwoody</a></li>
@@ -71,7 +81,7 @@
             <li data-coords="4.85,4.9" class="stations" data-line="RED" data-marker="interchange" data-station="NORTH AVENUE STATION" data-labelPos="W"><a href="#">North Avenue</a></li>
             <li data-coords="4.85,5.2" class="stations" data-line="RED" data-marker="interchange" data-station="CIVIC CENTER STATION" data-labelPos="W"><a href="#">Civic Center</a></li>
             <li data-coords="4.85,5.6" class="stations" data-line="RED" data-marker="interchange" data-station="PEACHTREE CENTER STATION" data-labelPos="W"><a href="#">Peachtree Center</a></li> 
-            <li data-coords="4.85,6" class="stations" data-line="RED" data-marker="interchange" data-station="FIVE POINTS STATION" data-labelPos="W"><a href="#">Five Points</a></li>
+            <li data-coords="4.85,6" class="stations" data-line="RED" data-textClass="visibleText" data-marker="interchange" data-station="FIVE POINTS STATION" data-labelPos="W"><a href="#">Five Points</a></li>
             <li data-coords="4.6,6.45" data-dir="S" data-line="RED" data-marker="interchange"></li>
             <li data-coords="4.6,6.45" class="stations" data-line="RED" data-marker="@interchange" data-station="GARNETT STATION" data-labelPos="W"><a href="#">Garnett</a></li>
             <li data-coords="4.25,6.9" class="stations" data-line="RED" data-marker="interchange" data-station="WEST END STATION" data-labelPos="W"><a href="#">West End</a></li>
@@ -79,11 +89,11 @@
             <li data-coords="4.25,7.55" class="stations" data-line="RED" data-marker="interchange" data-station="LAKEWOOD STATION" data-labelPos="W"><a href="#">Lakewood/Fort McPherson</a></li>
             <li data-coords="4.25,7.85" class="stations" data-line="RED" data-marker="interchange" data-station="EAST POINT STATION" data-labelPos="W"><a href="#">East Point</a></li>
             <li data-coords="4.25,8.35" class="stations" data-line="RED" data-marker="interchange" data-station="COLLEGE PARK STATION" data-labelPos="W"><a href="#">College Park</a></li>
-            <li data-coords="4.50,9.1" class="stations" data-line="RED" data-marker="interchange" data-station="AIRPORT STATION" data-labelPos="W"><a href="#">Airport</a></li>  
+            <li data-coords="4.50,9.1" class="stations" data-line="RED" data-textClass="visibleText" data-marker="interchange" data-station="AIRPORT STATION" data-labelPos="W"><a href="#">Airport</a></li>  
         </ul>
         <!-- Gold Line -->
         <ul data-color="#ffd700" id="GOLD" class="GOLD" data-label="MARTA Gold Line">
-            <li data-coords="6.8,2.1" class="stations" data-line="GOLD" data-marker="@interchange" data-station="DORAVILLE STATION" data-labelPos="W"><a href="#">Doraville</a></li>
+            <li data-coords="6.8,2.1" class="stations" data-line="GOLD" data-textClass="visibleText" data-marker="@interchange" data-station="DORAVILLE STATION" data-labelPos="W"><a href="#">Doraville</a></li>
             <li data-coords="6.45,2.45" class="stations" data-line="GOLD" data-marker="interchange" data-station="CHAMBLEE STATION" data-labelPos="W"><a href="#">Chamblee</a></li>
             <li data-coords="6.15,2.65" class="stations" data-line="GOLD" data-marker="interchange" data-station="BROOKHAVEN STATION" data-labelPos="W"><a href="#">Brookhaven</a></li>
             <li data-coords="5.7,3.1" class="stations" data-line="GOLD" data-marker="interchange" data-station="LENOX STATION" data-labelPos="W"><a href="#">Lenox</a></li>
@@ -105,7 +115,7 @@
         </ul>
         <!-- Blue Line -->
         <ul data-color="#0000ff" id="BLUE" class="BLUE" data-label="MARTA Blue Line">
-            <li data-coords="2.25,6.1" class="stations" data-line="BLUE" data-marker="@interchange" data-station="HAMILTON E HOLMES STATION" data-labelPos="S"><a href="#">Hamilton E. Holmes</a></li>
+            <li data-coords="2.25,6.1" class="stations" data-line="BLUE" data-textClass="visibleText" data-marker="@interchange" data-station="HAMILTON E HOLMES STATION" data-labelPos="S"><a href="#">Hamilton E. Holmes</a></li>
             <li data-coords="2.7,6.1" class="stations" data-line="BLUE" data-marker="interchange" data-station="WEST LAKE STATION" data-labelPos="N"><a href="#">West Lake</a></li>
             <li data-coords="3.6,6" class="stations" data-line="BLUE" data-marker="interchange" data-station="ASHBY STATION" data-labelPos="S"><a href="#">Ashby</a></li>
             <li data-coords="3.95,6" class="stations" data-line="BLUE" data-marker="interchange" data-station="VINE CITY STATION" data-labelPos="N"><a href="#">Vine City</a></li>
@@ -119,11 +129,11 @@
             <li data-coords="7.2,6.1" class="stations" data-line="BLUE" data-marker="interchange" data-station="DECATUR STATION" data-labelPos="N"><a href="#">Decatur</a></li>
             <li data-coords="7.6,6.1" class="stations" data-line="BLUE" data-marker="interchange" data-station="AVONDALE STATION" data-labelPos="S"><a href="#">Avondale</a></li>
             <li data-coords="7.9,6.1" class="stations" data-line="BLUE" data-marker="interchange" data-station="KENNSINGTON STATION" data-labelPos="N"><a href="#">Kennsington</a></li>
-            <li data-coords="8.4,6.1" class="stations" data-line="BLUE" data-marker="interchange" data-station="INDIAN CREEK STATION" data-labelPos="S"><a href="#">Indian Creek</a></li>
+            <li data-coords="8.4,6.1" class="stations" data-line="BLUE"  data-textClass="visibleText" data-marker="interchange" data-station="INDIAN CREEK STATION" data-labelPos="S"><a href="#">Indian Creek</a></li>
         </ul>
         <!-- Green Line -->
         <ul data-color="#00ff00" id="GREEN" class="GREEN" data-label="MARTA Green Line">
-            <li data-coords="3,5.4" class="stations" data-line="GREEN" data-marker="@interchange" data-station="" data-labelPos="W"><a href="#">Bankhead</a></li>
+            <li data-coords="3,5.4" class="stations" data-line="GREEN" data-textClass="visibleText" data-marker="@interchange" data-station="" data-labelPos="W"><a href="#">Bankhead</a></li>
             <li data-coords="3.6,5.95" class="stations" data-line="GREEN" data-marker="interchange" data-station="ASHBY STATION" data-labelPos="S"></li>
             <li data-coords="3.95,5.95" class="stations" data-line="GREEN" data-marker="interchange" data-station="VINE CITY STATION" data-labelPos="N"></li>
             <li data-coords="4.35,5.95" class="stations" data-line="GREEN" data-marker="interchange" data-station="OMNI DOME STATION" data-labelPos="S"></li>
@@ -285,7 +295,7 @@
             <li data-coords="4.55,9.1" class="stations" data-station="AIRPORT STATION" data-labelPos="W"></li>  
         </ul>
         <!-- Gold Train Reverse -->
-        <ul data-color="#ffd700" id="goldTrain" class="goldTrain" data-label="Train C">
+        <ul data-color="#ffd700" id="goldTrainRev" class="goldTrain" data-label="Train C">
             <li data-coords="4.55,9.1" class="stations" data-station="AIRPORT STATION" data-labelPos="W"></li>
             <li data-coords="4.30,8.35" class="stations" data-station="COLLEGE PARK STATION" data-labelPos="W"></li>
             <li data-coords="4.30,7.85" class="stations" data-station="EAST POINT STATION" data-labelPos="W"></li>
@@ -325,7 +335,7 @@
             <li data-coords="8.4,6.1" class="stations" data-station="INDIAN CREEK STATION" data-labelPos="S"> </li>
         </ul>
         <!-- Blue Train Reversed -->
-        <ul data-color="#0000ff" id="blueTrain" class="blueTrain" data-label="Train D">
+        <ul data-color="#0000ff" id="blueTrainRev" class="blueTrain" data-label="Train D">
             <li data-coords="8.4,6.1" class="stations" data-station="INDIAN CREEK STATION" data-labelPos="S"> </li>
             <li data-coords="7.9,6.1" class="stations" data-station="KENNSINGTON STATION" data-labelPos="N"> </li>
             <li data-coords="7.6,6.1" class="stations" data-station="AVONDALE STATION" data-labelPos="S"> </li>
@@ -355,7 +365,7 @@
             <li data-coords="6.35,5.95" class="stations" data-station="EDGEWOOD STATION" data-labelPos="N"></li>
         </ul>
         <!-- Green Train Reversed -->
-        <ul data-color="#00ff00" id="greenTrain" class="greenTrain" data-label="Train E">
+        <ul data-color="#00ff00" id="greenTrainRev" class="greenTrain" data-label="Train E">
             <li data-coords="6.35,5.95" class="stations" data-station="EDGEWOOD STATION" data-labelPos="N"></li>
             <li data-coords="5.9,5.95" class="stations" data-station="INMAN PARK STATION" data-labelPos="S"></li>
             <li data-coords="5.6,5.95" class="stations" data-station="KING MEMORIAL STATION" data-labelPos="N"></li>
@@ -370,38 +380,16 @@
     </div>
     <div id="legend"></div>
     <script type="text/javascript">
-        $("#subwaymap").subwayMap({ debug: false });
+        $(".subwaymap").subwayMap({ debug: false });
+        makeStationNamesVisible();
         //var response = {};
         //response = getResponse();
         //console.log(response);
         //var elTemp = $('<div>').append($('#redRoute').clone()).html();
         //var el = $(elTemp);
         //drawTrainRoute(el);
-        //getData();
         $(document).ready(function() {
-            $('div').on('click', function(e) {
-                var x = e.clientX
-                  , y = e.clientY
-                //...
-                var stations = JSON.parse(localStorage.getItem("stations"));
-                console.log(stations);      
-                for (z = 0; z < stations.length; z++) {
-                    var isClicked = isInCircle(stations[z][0], stations[z][1], stations[z][2], x, y);
-                    if (isClicked == true) {
-                        console.log("Found It Clicked: " + stations[z][3]);
-                        var station = stations[z][3];
-                        var line = station[z][6];
-                        z=999;
-                        $('.trainRoutes').empty();
-                        getIncomingTrains(station, line);
-                        $('#subwaymap .canvas').remove();
-                        $('#legend').empty();
-                        $('#subwaymapinvisible').subwayMap({ debug: true });
-                        $('.trainRoutes').subwayMap({ debug: true });
-                        $('.trainRoutes').css("display","block");        
-                    }
-                }
-            });
+            setCanvasEvent();
         });
     </script>
 </body>
