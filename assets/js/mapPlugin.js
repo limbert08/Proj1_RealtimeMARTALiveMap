@@ -119,8 +119,7 @@ var stations = [];
         if ((reverseMarkers === undefined) || (reverseMarkers.toLowerCase() == "false"))
             reverseMarkers = false;
         else
-            reverseMarkers = true;
-
+            reverseMarkers = true;        
 
         this.options.pixelWidth = columns * scale;
         this.options.pixelHeight = rows * scale;
@@ -130,6 +129,7 @@ var stations = [];
         //el.css("height", this.options.pixelHeight);
         var self = this;
         var lineLabels = [];
+        var trainID = "";
         var supportsCanvas = $("<canvas></canvas>")[0].getContext;
         if (supportsCanvas) {
 
@@ -137,9 +137,16 @@ var stations = [];
             $(el).children("ul").each(function (index) {
                 var ul = $(this);
 
-                var color = $(ul).attr("data-color");
-                if (color === undefined) color = "#000000";
+                trainID = $(ul).attr("data-trainID");
+                if (trainID === undefined) trainID ="";
 
+                //if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+                //    var color = "#"+("000"+(Math.random()*(1<<24)|0).toString(16)).substr(-6);
+                //} else {
+                    var color = $(ul).attr("data-color");
+                    if (color === undefined) color = "#000000";    
+                //}
+                
                 var lineTextClass = $(ul).attr("data-textClass");
                 if (lineTextClass === undefined) lineTextClass = "";
 
@@ -157,7 +164,7 @@ var stations = [];
                 if (lineLabel === undefined)
                     lineLabel = "Line " + index;
 
-                lineLabels[lineLabels.length] = {label: lineLabel, color: color};
+                lineLabels[lineLabels.length] = {label: lineLabel, color: color, trainID: trainID};
 
                 var nodes = [];
                 $(ul).children("li").each(function () {
@@ -183,8 +190,13 @@ var stations = [];
                     var markerInfo = $(this).attr("data-markerInfo");
                     if (markerInfo == undefined) markerInfo = "";
                     
-                    var dotted = $(this).attr("data-dotted-line");
-                    if (dotted == undefined) dotted = "false";
+                    if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+                        var dotted = "false";
+                    } else {
+                        var dotted = $(this).attr("data-dotted-line");
+                        if (dotted == undefined) dotted = "false";        
+                    }
+                    
                     
                     var anchor = $(this).children("a:first-child");
                     var label = $(this).text();
@@ -219,7 +231,42 @@ var stations = [];
                 var legend = $("#" + legendId);
 
                 for(var line=0; line<lineLabels.length; line++)
-                    legend.append("<div><span style='float:left;width:20px;height:" + lineWidth + "px;background-color:" + lineLabels[line].color + "'></span>" + lineLabels[line].label + "</div>");
+                    if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+                        var arrivals = JSON.parse(localStorage.getItem("arrivals"));
+                        for (z =0; z < arrivals.train.length; z++) {
+                            if (arrivals.train[z] === lineLabels[line].trainID) {
+                                /*legend.append("<div><span style='float:left;width:20px;height:" + 
+                                lineWidth + "px;background-color:" + lineLabels[line].color + "'></span>" + 
+                                lineLabels[line].label + " " + arrivals.train[z] + "Next Station: " + 
+                                arrivals.station[z] + "Direction: " + arrivals.direction[z] + "Arrival Time: " + 
+                                arrivals.time[z] + "Final Station " + arrivals.final[z] + "</div>");
+                                */
+                                var longDirection = "";
+                                switch(arrivals.direction[z]) {
+                                    case "N":
+                                        longDirection = "North Bound";
+                                        break;
+                                    case "S":
+                                        longDirection = "South Bound";
+                                        break;
+                                    case "E":
+                                        longDirection = "East Bound";
+                                        break;
+                                    case "W":
+                                        longDirection = "West Bound";
+                                        break;
+                                    default:
+                                        longDirection = "";
+                                }
+                                legend.append("<div><span style='float:left;width:20px;height:" + 
+                                lineWidth + "px;background-color:" + lineLabels[line].color + "'></span>" + 
+                                "Train:" + " " + arrivals.train[z] + " " + longDirection + " Arriving: " + 
+                                arrivals.time[z] + " at " + arrivals.station[z] + "</div>");
+                            }
+                        }
+                    } else {
+                        legend.append("<div><span style='float:left;width:20px;height:" + lineWidth + "px;background-color:" + lineLabels[line].color + "'></span>" + lineLabels[line].label + "</div>");             
+                    }
             }
 
         }
@@ -228,7 +275,7 @@ var stations = [];
 
         var ctx = this._getCanvasLayer(el, false);
         ctx.beginPath();
-        ctx.moveTo(nodes[0].x * scale, nodes[0].y * scale);
+        ctx.moveTo(nodes[0].x * scale, (nodes[0].y * scale)-15);
         var markers = [];
         var lineNodes = [];
         var node;
@@ -258,7 +305,7 @@ var stations = [];
                 var yDiff = Math.round(Math.abs(currNode.y - nextNode.y));
                 if ((xDiff == 0) || (yDiff == 0)) {
                     // Horizontal or Vertical
-                    ctx.lineTo((nextNode.x * scale) + xCorr, (nextNode.y * scale) + yCorr);
+                    ctx.lineTo((nextNode.x * scale) + xCorr, ((nextNode.y * scale)-15) + yCorr);
                 }
                 else if ((xDiff == 1) && (yDiff == 1)) {
                     // 90 degree turn
@@ -306,13 +353,17 @@ var stations = [];
                             nextNode.x * scale, nextNode.y * scale);
                 }
                 else
-                    ctx.lineTo(nextNode.x * scale, nextNode.y * scale);
+                    ctx.lineTo(nextNode.x * scale, (nextNode.y-15) * scale);
             }
         }
 
-        if (nodes[0].dotted == "true") { ctx.setLineDash([5, 5]); }
+        if (nodes[0].dotted == "true") { ctx.setLineDash([10, 10]); }
         ctx.strokeStyle = color;
-        ctx.lineWidth = width;
+        if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+            ctx.lineWidth = 15;
+        } else {
+            ctx.lineWidth = width;
+        }
         ctx.stroke();
 
         ctx = this._getCanvasLayer(el, true);
@@ -350,16 +401,31 @@ var stations = [];
             case "@interchange":
                 ctx.lineWidth = width;
                 if (data.markerInfo == "") {
-                    ctx.arc(x, y, width * 0.7, 0, Math.PI * 2, true);
+                    ctx.arc(x, (y-15), width * 0.7, 0, Math.PI * 2, true);
                     if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+                        //ctx.drawImage('assets/js/tube.svg', 0 , 0);
+                        var img = new Image();
+                        //img.width = '25';
+                        //img.height = '25';
+
+                        img.onload = function(){
+                            ctx.drawImage(img,(x-10),(y-10),'25','25');
+                        }
+                        img.src = 'assets/js/tube.svg';
+
+                        //ctx.drawImage(img,0,0);
 
                     } else {
                         var tempArr = [];
-                        tempArr.push(x, y, width, data['stationID'].toString(), data['x'].toString(), data['y'].toString(), data['line'].toString());
+                        tempArr.push(x, y, width, data['stationID'].toString(), data['x'], data['y'], data['line'].toString());
                         stations.push(tempArr);
                         console.log(stations);
                     }
                 }
+                else if (el[0].attributes[0].nodeValue == 'trainRoutes') 
+                {
+                    
+                } 
                 else
                 {
                     var mDir = data.markerInfo.substr(0,1).toLowerCase();
@@ -429,10 +495,11 @@ var stations = [];
                 topOffset = offset;
                 break;
         }
-        var style = (textClass != "" ? "class='" + textClass + "' " : "") + "style='" + (textClass == "" ? "font-size:8pt;font-family:Verdana,Arial,Helvetica,Sans Serif;text-decoration:none;" : "") + "width:100px;" + (pos != "" ? pos : "") + ";position:absolute;top:" + (y + el.offset().top - (topOffset > 0 ? topOffset : 0)) + "px;left:" + (x + el.offset().left) + "px;z-index:3000;'";
-        if (data.link != "")
-            $("<a id="+ data.label.replace(/\s/g, "") + " " + style + " title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "' target='_images'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
-        else
+        var style = (textClass != "" ? "class='" + textClass + "' " : "") + "style='" + (textClass == "" ? "font-size:8pt;font-family:Verdana,Arial,Helvetica,Sans Serif;text-decoration:none;" : "") + "width:100px;" + (pos != "" ? pos : "") + ";position:absolute;top:" + ((y + el.offset().top - (topOffset > 0 ? topOffset : 0))-20) + "px;left:" + (x + el.offset().left) + "px;z-index:3000;'";
+        if (data.link != "") {
+            var tempString = data.label.replace(/\./g, '');
+            $("<a id="+ tempString.replace(/\s/g, "") + " " + style + " title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "' target='_images'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
+        } else
             $("<span " + style + ">" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
 
     },
@@ -521,10 +588,10 @@ var fgColor = "#ff0000";
         var bgColor = "#00ff00";
         
   ctx.beginPath();
-  ctx.arc(x, y, width * 1.5, 0, Math.PI * 2, true);
+  ctx.arc(x, (y-15), width * 1.5, 0, Math.PI * 2, true);
   
   ctx.closePath();
-  if (ctx.isPointInPath(clickX, clickY)) {
+  if (ctx.isPointInPath(clickX, (clickY-15))) {
     return true;
   }
   //ctx.stroke();

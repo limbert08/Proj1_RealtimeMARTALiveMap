@@ -61,6 +61,7 @@ function stationSearch(martadata, responseId) {
   final: finalArray
   }
   console.log(nextArrivals);
+  localStorage.setItem("arrivals", JSON.stringify(nextArrivals));
   drawTrainRoute(nextArrivals)
 }
 
@@ -78,36 +79,40 @@ function drawTrainRoute(trains) {
     nextArrival = trains.time[i];
     station = trains.station[i];
     train = trains.train[i];
-    if ((line == 'RED') && (direction == 'N')) {
-      buildTrainUL('#redTrain li', '#ccffcc', 'RED', 'redTrain', station)
-    } else if ((line == 'RED') && (direction == 'S')) {
-      buildTrainUL('#redTrainRev li', '#ccff00', 'RED', 'redTrainRev', station);
-    } else if ((line == 'BLUE') && (direction == 'N')) {
-      buildTrainUL('#blueTrain li', '#ccffcc', 'BLUE', 'blueTrain', station)
-    } else if ((line == 'BLUE') && (direction == 'S')) {
-      buildTrainUL('#blueTrainRev li', '#ccff00', 'BLUE', 'blueTrainRev', station);
-    } else if ((line == 'GOLD') && (direction == 'N')) {
-      buildTrainUL('#goldTrain li', '#ccffcc', 'GOLD', 'goldTrain', station)
+    if ((line == 'RED') && (direction == 'S')) {
+      buildTrainUL('#redTrain li', '#DC143C', 'RED', 'redTrain', station, train)
+    } else if ((line == 'RED') && (direction == 'N')) {
+      buildTrainUL('#redTrainRev li', '#B0171F', 'RED', 'redTrainRev', station, train);
+    } else if ((line == 'BLUE') && (direction == 'E')) {
+      buildTrainUL('#blueTrain li', '#0000FF', 'BLUE', 'blueTrain', station, train)
+    } else if ((line == 'BLUE') && (direction == 'W')) {
+      buildTrainUL('#blueTrainRev li', '#4F94CD', 'BLUE', 'blueTrainRev', station, train);
     } else if ((line == 'GOLD') && (direction == 'S')) {
-      buildTrainUL('#goldTrainRev li', '#ccff00', 'GOLD', 'goldTrainRev', station);
-    } else if ((line == 'GREEN') && (direction == 'N')) {
-      buildTrainUL('#greenTrain li', '#ccffcc', 'GREEN', 'greenTrain', station)
-    } else if ((line == 'GREEN') && (direction == 'S')) {
-      buildTrainUL('#greenTrainRev li', '#ccff00', 'GREEN', 'greenTrainRev', station);
+      buildTrainUL('#goldTrain li', '#CDAD00', 'GOLD', 'goldTrain', station, train)
+    } else if ((line == 'GOLD') && (direction == 'N')) {
+      buildTrainUL('#goldTrainRev li', '#B8860B', 'GOLD', 'goldTrainRev', station, train);
+    } else if ((line == 'GREEN') && (direction == 'E')) {
+      buildTrainUL('#greenTrain li', '#00CD00', 'GREEN', 'greenTrain', station, train)
+    } else if ((line == 'GREEN') && (direction == 'W')) {
+      buildTrainUL('#greenTrainRev li', '#008B00', 'GREEN', 'greenTrainRev', station, train);
     }
   }
   reDrawMaps();
 }
 
-function buildTrainUL(div, color, elClass, id, station) {
+function buildTrainUL(div, color, elClass, id, station, trainID) {
   var trainLine = $(div);
-  var trainRoute = $('<ul data-color="'+color+'" id="'+id+'" class="'+elClass+'" data-label="Train#"></ul>').appendTo('#trainRoutes');
+  var trainRoute = $('<ul data-trainID="'+trainID+'"data-color="'+color+'" id="'+id+'" class="'+elClass+'" data-label="Train#"></ul>').appendTo('#trainRoutes');
   for (x = 0; x < trainLine.length; x++) {
     if (trainLine[x].attributes.length > 2) {
       if (trainLine[x].attributes[2].nodeValue == station){
-        trainLine.length=x;
+        trainLine.length=(x+1);
         trainLine.each(function(index, value){
-          trainRoute.append(value);
+          if(index + 1 === trainLine.length){ //last element
+            $(value).attr('data-marker', '@interchange');
+          }
+          $(value).clone(true).appendTo(trainRoute);
+          //trainRoute.append(value);
         });
       }
     }  
@@ -151,10 +156,40 @@ function setCanvasEvent() {
     getUserClick(e);                 
   });
 }
+
+function testEvent() {
+  var timer;
+  $('.canvas').off('mousemove');
+  $('.canvas').on('mousemove', function(e) {
+    var x = e.clientX
+    , y = e.clientY
+    //...
+    var stations = JSON.parse(localStorage.getItem("stations"));
+        for (z = 0; z < stations.length; z++) {
+          var isClicked = isInCircle(stations[z][0], stations[z][1], stations[z][2], x, y);
+          if (isClicked == true) {
+            var tempString = stations[z][3].toProperCase();
+            tempString = tempString.substring(0, tempString.lastIndexOf(" "));
+            $('#'+tempString.replace(/\s/g,'')).css('opacity', 1);
+            console.log(tempString.replace(/\s/g,''));
+            try {
+              clearTimeout(timer);
+            } catch (e) {}
+            timer = setTimeout(function () {
+              $('#'+tempString.replace(/\s/g,'')).css('opacity', 0);
+            }, 100);
+          }
+        }                     
+    }); 
+}
+
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
         
 function makeStationNamesVisible() {
   $('#NorthSprings').css('display', 'block');
-  $('#FivePoints').css('display', 'block');
+  //$('#FivePoints').css('display', 'block');
   $('#Doraville').css('display', 'block');
   $('#Airport').css('display', 'block');
   $('#Bankhead').css('display', 'block');
