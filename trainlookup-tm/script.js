@@ -12,23 +12,23 @@ var numResults = "";
 
 // ******************** Beginning of Marta API Call (Testing) ********
 
-// Marta API key
-var martakey = "34127def-ccfe-4ed4-b0d4-2bfd7611807d";
+// // Marta API key
+// var martakey = "34127def-ccfe-4ed4-b0d4-2bfd7611807d";
 
-// Using Proxy because idk how CORS works
-var queryBase = "https://cors-anywhere.herokuapp.com/developer.itsmarta.com/RealtimeTrain/RestServiceNextTrain/GetRealtimeArrivals?apikey=" + martakey;
+// // Using Proxy because idk how CORS works
+// var queryBase = "https://cors-anywhere.herokuapp.com/developer.itsmarta.com/RealtimeTrain/RestServiceNextTrain/GetRealtimeArrivals?apikey=" + martakey;
 
-// console log marta API address
-console.log("Marta API Address:");
-console.log(queryBase);
+// // console log marta API address
+// console.log("Marta API Address:");
+// console.log(queryBase);
 
-// Call marta api for full data and pass marta data to marta query
-$.ajax({
-    url: queryBase,
-    method: "GET"
-}).done(function(martadata) {
-	martaquery(martadata)
-});
+// // Call marta api for full data and pass marta data to marta query
+// $.ajax({
+//     url: queryBase,
+//     method: "GET"
+// }).done(function(martadata) {
+// 	martaquery(martadata)
+// });
 
 // ********************* End of Marta API call ********************
 
@@ -46,11 +46,15 @@ $.ajax({
     firebase.initializeApp(config);
 	var database = firebase.database();
 
-	database.ref().on("value", function(martadata) {
-		console.log("Testing firebase call");
-		console.log(martadata.val().trains);
-		// martaquery(martadata);
-	});
+database.ref().on("value", function(martadata) {
+	$("#targetbody").html("");
+	console.clear();
+	console.log("Testing firebase call");
+
+	var martadata = martadata.val().trains;
+
+	martaquery(martadata);
+
 
 // *********************** End of firebase call ********************
 
@@ -114,7 +118,7 @@ function martaquery(martadata) {
 			nextDestination.push(martadata[i].STATION);
 			arrivalTime.push(martadata[i].NEXT_ARR);
 		}
-		console.log(i);
+	
 	}
 
 	// log all unique values
@@ -152,9 +156,7 @@ function martaquery(martadata) {
     		.append($('<td>').append(allTrains.arrivalTime[i]))
     		.append($('<td>').append(allTrains.finalDestination[i]))
    		)
-
 	}
-
 }
 // ********************** End function martaquery ***************************
 
@@ -165,12 +167,9 @@ function martaquery(martadata) {
 $("#run-search").on("click", function(event) {
 	event.preventDefault();
 	var responseId = $("#num-records-select").children("option:selected").val();
-    $.ajax({
-		url: queryBase,
-		method: "GET"
-	}).done(function(martadata) {
-		stationSearch(martadata, responseId)
-	});
+
+	stationSearch(martadata, responseId)
+
 });
 
 // Clears recent search list
@@ -183,7 +182,6 @@ $("#clear-all").on("click", function(event) {
 
 // stationSearch - identifies next inbound train to each station
 function stationSearch(martadata, responseId) {
-
 
 	$("#searchList").html("");
 	$("#station-id").html("");
@@ -203,7 +201,6 @@ function stationSearch(martadata, responseId) {
     		directionArray.push(martadata[i].DIRECTION);
     		finalArray.push(martadata[i].DESTINATION);
     	}
-
     }
 
     console.log("Next arrivals for " + responseId);
@@ -236,6 +233,6 @@ function stationSearch(martadata, responseId) {
 
 // ********************** END OF SEARCH FUNCTION ********************
 
-
+}); //End of firebase call
 
 
