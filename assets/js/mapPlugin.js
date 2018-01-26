@@ -433,7 +433,6 @@ var stations = [];
                         var tempArr = [];
                         tempArr.push(x, y, width, data['stationID'].toString(), data['x'], data['y'], data['line'].toString());
                         stations.push(tempArr);
-                        console.log(stations);
                     }
                 }
                 else if (el[0].attributes[0].nodeValue == 'trainRoutes') 
