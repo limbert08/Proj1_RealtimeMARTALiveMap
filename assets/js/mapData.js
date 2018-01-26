@@ -1,7 +1,7 @@
-var returnRespone = {};
+//var returnRespone = {};
 function getResponse(station) {
   // This is the API key for Giphy
-  var APIKey = "7cfbab76-7af1-4ce7-b579-d1662046422d";
+  /*var APIKey = "7cfbab76-7af1-4ce7-b579-d1662046422d";
   const proxyurl = "https://cors-anywhere.herokuapp.com/";
   // Here we are building the URL we need to query the database
   var queryURL = "developer.itsmarta.com/RealtimeTrain/RestServiceNextTrain/GetRealtimeArrivals?apikey="+ APIKey;
@@ -18,8 +18,34 @@ function getResponse(station) {
     //fail promise to deal with unknown exceptions
   }).fail(function (jqXHR, textStatus) {
     alert('The request for your subject failed please try another button');
+  });*/
+  // ********************* Firebase call ****************************
+var config = {
+    apiKey: "AIzaSyChS-KWClciEknCOfjJKJ15ufrrZ847z9I",
+    authDomain: "marta-hw.firebaseapp.com",
+    databaseURL: "https://marta-hw.firebaseio.com",
+    projectId: "marta-hw",
+    storageBucket: "marta-hw.appspot.com",
+    messagingSenderId: "235403493962"
+    };
+    firebase.initializeApp(config);
+    var database = firebase.database();
+database.ref().on("value", function(martadata) {
+  $("#targetbody").html("");
+  console.clear();
+  console.log("Testing firebase call");
+
+  var martadata = martadata.val().trains;
+  console.log(martadata);
+  stationSearch(martadata, station);
+  firebase.database().goOffline()// Kill this firebase app.
+  firebase.app().delete().then(function() {
+    console.log("tear down");
   });
-  
+
+// *********************** End of firebase call ********************
+
+});
 }
 
 // stationSearch - identifies next inbound train to each station
@@ -177,7 +203,7 @@ function testEvent() {
             } catch (e) {}
             timer = setTimeout(function () {
               $('#'+tempString.replace(/\s/g,'')).css('opacity', 0);
-            }, 100);
+            }, 1000);
           }
         }                     
     }); 
@@ -188,13 +214,13 @@ String.prototype.toProperCase = function () {
 };
         
 function makeStationNamesVisible() {
-  $('#NorthSprings').css('display', 'block');
+  $('#NorthSprings').css('opacity', 1);
   //$('#FivePoints').css('display', 'block');
-  $('#Doraville').css('display', 'block');
-  $('#Airport').css('display', 'block');
-  $('#Bankhead').css('display', 'block');
-  $('#IndianCreek').css('display', 'block');
-  $('#HamiltonE.Holmes').css('display', 'block');
+  $('#Doraville').css('opacity', 1);
+  $('#Airport').css('opacity', 1);
+  $('#Bankhead').css('opacity', 1);
+  $('#IndianCreek').css('opacity', 1);
+  $('#HamiltonEHolmes').css('opacity', 1);
 }
 
 

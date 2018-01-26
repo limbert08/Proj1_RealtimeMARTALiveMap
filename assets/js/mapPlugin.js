@@ -275,7 +275,11 @@ var stations = [];
 
         var ctx = this._getCanvasLayer(el, false);
         ctx.beginPath();
-        ctx.moveTo(nodes[0].x * scale, (nodes[0].y * scale)-15);
+        if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+            ctx.moveTo((nodes[0].x * scale)+.1, (nodes[0].y * scale)-15);
+        } else {
+            ctx.moveTo(nodes[0].x * scale, (nodes[0].y * scale)-15);
+        }
         var markers = [];
         var lineNodes = [];
         var node;
@@ -305,7 +309,12 @@ var stations = [];
                 var yDiff = Math.round(Math.abs(currNode.y - nextNode.y));
                 if ((xDiff == 0) || (yDiff == 0)) {
                     // Horizontal or Vertical
-                    ctx.lineTo((nextNode.x * scale) + xCorr, ((nextNode.y * scale)-15) + yCorr);
+                   if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+                        ctx.lineTo((nextNode.x * scale)+.1 + xCorr, ((nextNode.y * scale)-15) + yCorr);
+                    } else {
+                        ctx.lineTo((nextNode.x * scale)+.1 + xCorr, ((nextNode.y * scale)-15) + yCorr);
+                    }
+
                 }
                 else if ((xDiff == 1) && (yDiff == 1)) {
                     // 90 degree turn
@@ -353,16 +362,21 @@ var stations = [];
                             nextNode.x * scale, nextNode.y * scale);
                 }
                 else
-                    ctx.lineTo(nextNode.x * scale, (nextNode.y-15) * scale);
+                    if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+                        ctx.lineTo((nextNode.x * scale)+.1, (nextNode.y-15) * scale);
+                    } else {
+                        ctx.lineTo(nextNode.x * scale, (nextNode.y-15) * scale);
+                    }                    
             }
         }
 
         if (nodes[0].dotted == "true") { ctx.setLineDash([10, 10]); }
         ctx.strokeStyle = color;
         if (el[0].attributes[0].nodeValue == 'trainRoutes') {
-            ctx.lineWidth = 15;
+            ctx.lineWidth = 4;
         } else {
-            ctx.lineWidth = width;
+            //ctx.lineWidth = width;
+            ctx.lineWidth = 12;
         }
         ctx.stroke();
 
@@ -390,7 +404,7 @@ var stations = [];
             fgColor = "#ffffff";
             bgColor = "#000000";
         }
-
+        width = 8;
         // Render station and interchange icons
         ctx.strokeStyle = fgColor;
         ctx.fillStyle = bgColor;
