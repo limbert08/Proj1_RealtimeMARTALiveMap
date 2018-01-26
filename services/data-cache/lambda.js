@@ -30,24 +30,23 @@ exports.handler = (event, context, callback) => {
     };
 
     request(options, function (error, response, body) {
-        database.ref('trains/').set({});
-        if (error) throw new Error(error);
         body = JSON.parse(body);
         console.log('body', body);
         console.log('database', database);
+        var dataset = [];
         for (var obj of body) {
             console.log('looping obj', obj);
-            database.ref('trains').push(obj);
-            if (error != null) {
-                process.stdout.write(error);
-                console.log(error.toString());
-            };
+            dataset.push(obj);
         }
+        database.ref('trains/').set(dataset);
+        if (error != null) {
+            process.stdout.write(error);
+            console.log(error.toString());
+        };
         return;
     });
     
     callback(null, "done");
-    context.succeed("done");
     
 }
 
