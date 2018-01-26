@@ -31,7 +31,7 @@ $.ajax({
     console.log(weatherDesc + " " + picImg + " " + atlTemp);
     console.log(picImgUrl);
 
-    $("img").attr("src", picImgUrl);
+    $("#atlimg").attr("src", picImgUrl);
 
     $("#atlweather").append("<br><br> The weather today in Atlanta is :  " + weatherDesc);
     $("#atlweather").append("<br> Temperature is :  " + atlTemp + " deg F");
