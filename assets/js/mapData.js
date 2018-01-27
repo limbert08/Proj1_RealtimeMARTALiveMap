@@ -156,8 +156,8 @@ function setCanvasEvent() {
 }
 
 function captureEvents() {
-  $('.canvas').off('click mousemove touchstart');
-  $('.canvas').on('click mousemove touchstart', function(e) {
+  $('.canvas').off('click touchstart');
+  $('.canvas').on('click touchstart', function(e) {
      $('#toast').css('left',e.pageX + 'px' );
      $('#toast').css('top',e.pageY + 'px' );
     var x = e.clientX
@@ -173,7 +173,7 @@ function captureEvents() {
           if (isClicked == true) {
             var tempString = stations[z][3].toProperCase();
             tempString = tempString.substring(0, tempString.lastIndexOf(" "));
-            toast('#'+tempString.replace(/\s/g,''));
+            toast('#'+tempString.replace(/\s/g,''), e);
           }
         }                     
     });
@@ -202,7 +202,7 @@ function moveToastLinks(element) {
   });   
 }
 
-function toast(test) {
+function toast(test, e) {
     $('.text').css('opacity', 0);
     $('.text').css('display', 'none');
     $(test).css('opacity', 1);
@@ -212,8 +212,8 @@ function toast(test) {
       $('#trainRoutes').empty();
       $(test).css('opacity', 0);
       $(test).css('display', 'none');
-      e.preventDefault(); 
-      e.stopImmediatePropagation();
+      //e.preventDefault(); 
+      //e.stopImmediatePropagation();
       getResponse($(test).text().toUpperCase() + ' STATION');
       localStorage.clear();
       $('.canvas').off('click mousemove touchstart');
