@@ -71,7 +71,6 @@ var stations = [];
         return (canvas[0].getContext("2d"));
     },
     _render: function (el) {
-
         this.layer = -1;
         var rows = el.attr("data-rows");
         if (rows === undefined)
@@ -272,7 +271,6 @@ var stations = [];
         }
     },
     _drawLine: function (el, scale, rows, columns, color, textClass, width, nodes, reverseMarkers) {
-
         var ctx = this._getCanvasLayer(el, false);
         ctx.beginPath();
         if (el[0].attributes[0].nodeValue == 'trainRoutes') {
@@ -368,6 +366,13 @@ var stations = [];
                         ctx.lineTo(nextNode.x * scale, (nextNode.y-15) * scale);
                     }                    
             }
+            if ((lineNode == (lineNodes.length - 1)) && (el[0].attributes[0].nodeValue == 'trainRoutes')) {
+                var img = new Image();
+                img.onload = function(){
+                    ctx.drawImage(img,(currNode.x) * scale,(currNode.y) * scale,'40','40');
+                }
+                img.src = 'assets/images/tube.svg';
+            }
         }
 
         if (nodes[0].dotted == "true") { ctx.setLineDash([10, 10]); }
@@ -384,7 +389,12 @@ var stations = [];
         for (node = 0; node < nodes.length; node++) {
             this._drawMarker(el, ctx, scale, color, textClass, width, nodes[node], reverseMarkers);
         }
-        localStorage.setItem("stations", JSON.stringify(stations));  
+        if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+
+        } else {
+            localStorage.setItem("stations", JSON.stringify(stations));    
+        }
+          
 
     },
     _drawMarker: function (el, ctx, scale, color, textClass, width, data, reverseMarkers) {
@@ -415,21 +425,10 @@ var stations = [];
             case "@interchange":
                 ctx.lineWidth = width;
                 if (data.markerInfo == "") {
-                    ctx.arc(x, (y-15), width * 0.7, 0, Math.PI * 2, true);
                     if (el[0].attributes[0].nodeValue == 'trainRoutes') {
-                        //ctx.drawImage('assets/js/tube.svg', 0 , 0);
-                        var img = new Image();
-                        //img.width = '25';
-                        //img.height = '25';
-
-                        img.onload = function(){
-                            ctx.drawImage(img,(x-10),(y-10),'25','25');
-                        }
-                        img.src = 'assets/js/tube.svg';
-
-                        //ctx.drawImage(img,0,0);
-
+                        ctx.arc(x, (y), width * 0.7, 0, Math.PI * 2, true);
                     } else {
+                        ctx.arc(x, (y-15), width * 0.7, 0, Math.PI * 2, true);
                         var tempArr = [];
                         tempArr.push(x, y, width, data['stationID'].toString(), data['x'], data['y'], data['line'].toString());
                         stations.push(tempArr);
@@ -463,7 +462,12 @@ var stations = [];
             case "station":
             case "@station":
                 ctx.lineWidth = width/2;
-                ctx.arc(x, y, width/2, 0, Math.PI * 2, true);
+                if (el[0].attributes[0].nodeValue == 'trainRoutes') {
+
+                } else {
+                    ctx.arc(x, (y-15), width/2, 0, Math.PI * 2, true);    
+                }
+                
                 break;
         }
         ctx.closePath();
@@ -511,7 +515,12 @@ var stations = [];
         var style = (textClass != "" ? "class='" + textClass + "' " : "") + "style='" + (textClass == "" ? "font-size:8pt;font-family:Verdana,Arial,Helvetica,Sans Serif;text-decoration:none;" : "") + "width:100px;" + (pos != "" ? pos : "") + ";position:absolute;top:" + ((y + el.offset().top - (topOffset > 0 ? topOffset : 0))-20) + "px;left:" + (x + el.offset().left) + "px;z-index:3000;'";
         if (data.link != "") {
             var tempString = data.label.replace(/\./g, '');
-            $("<a id="+ tempString.replace(/\s/g, "") + " " + style + " title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "' target='_images'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
+            if (el[0].attributes[0].nodeValue == 'subwaymapinvisible') {
+                $("<a id="+ tempString.replace(/\s/g, "") + " " + style + " title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "' target='_self'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo($('#subwaymap'));
+            } else {
+                $("<a id="+ tempString.replace(/\s/g, "") + " " + style + " title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "' target='_self'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
+            }
+            //$("<a id="+ tempString.replace(/\s/g, "") + " " + style + " title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "' target='_self'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
         } else
             $("<span " + style + ">" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
 

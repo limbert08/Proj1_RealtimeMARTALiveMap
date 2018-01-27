@@ -8,8 +8,10 @@ function getResponse(station) {
     storageBucket: "marta-hw.appspot.com",
     messagingSenderId: "235403493962"
     };
-    firebase.initializeApp(config);
-    var database = firebase.database();
+      firebase.initializeApp(config);
+      var database = firebase.database();
+    
+    
   database.ref().on("value", function(martadata) {
     $("#targetbody").html("");
     console.clear();
@@ -123,7 +125,10 @@ function reDrawMaps() {
   $('#subwaymapinvisible').subwayMap({ debug: false });
   $('.trainRoutes').subwayMap({ debug: false });
   $('.trainRoutes').css("display","block");
-  setCanvasEvent();
+  var element = $('#subwaymap');
+  moveToastLinks(element);
+  //setCanvasEvent();
+  captureEvents();
 }
 
 function getUserClick(e) {
@@ -139,6 +144,7 @@ function getUserClick(e) {
               z=999;
               $('.trainRoutes').empty();
               getResponse(station);
+              localStorage.clear();
           }
       }
 }
@@ -149,10 +155,9 @@ function setCanvasEvent() {
   });
 }
 
-function testEvent() {
-  var timer;
-  $('.canvas').off('mousemove');
-  $('.canvas').on('mousemove', function(e) {
+function captureEvents() {
+  $('.canvas').off('click mousemove touchstart');
+  $('.canvas').on('click mousemove touchstart', function(e) {
     var x = e.clientX
     , y = e.clientY
     //...
@@ -162,16 +167,10 @@ function testEvent() {
           if (isClicked == true) {
             var tempString = stations[z][3].toProperCase();
             tempString = tempString.substring(0, tempString.lastIndexOf(" "));
-            $('#'+tempString.replace(/\s/g,'')).css('opacity', 1);
-            try {
-              clearTimeout(timer);
-            } catch (e) {}
-            timer = setTimeout(function () {
-              $('#'+tempString.replace(/\s/g,'')).css('opacity', 0);
-            }, 1000);
+            toast('#'+tempString.replace(/\s/g,''));
           }
         }                     
-    }); 
+    });
 }
 
 String.prototype.toProperCase = function () {
@@ -186,4 +185,40 @@ function makeStationNamesVisible() {
   $('#Bankhead').css('opacity', 1);
   $('#IndianCreek').css('opacity', 1);
   $('#HamiltonEHolmes').css('opacity', 1);
+}
+
+function moveToastLinks(element) {
+  $('#toast').empty();
+  $(element.selector + ' a').each(function(value, index) {
+    $(this).removeAttr("style")
+    console.log(this);
+    $(this).appendTo('#toast');
+  });   
+}
+
+function toast(test) {
+    $('.text').css('opacity', 0);
+    $('.text').css('display', 'none');
+    $(test).css('opacity', 1);
+    $(test).css('display', 'block');
+    $(test).css('z-index', 999999999);
+    $(test).click( function(e) {
+      $('#trainRoutes').empty();
+      $(test).css('opacity', 0);
+      $(test).css('display', 'none');
+      e.preventDefault(); 
+      e.stopImmediatePropagation();
+      getResponse($(test).text().toUpperCase() + ' STATION');
+      localStorage.clear();
+      $('.canvas').off('click mousemove touchstart');
+      return false; 
+    } );        
+    
+    var x = document.getElementById('toast');
+    x.className = "show";
+    setTimeout(function(){ 
+      $('.text').css('opacity', 0);
+      $('.text').css('display', 'none');
+      x.className = x.className.replace("show", ""); 
+    }, 10000); 
 }
