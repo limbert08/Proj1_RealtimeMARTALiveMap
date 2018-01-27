@@ -13,6 +13,7 @@
     {
         font-family: Verdana;
         font-size: 8pt;
+        zoom: .5;
     }
     /* Text labels */
     .text
@@ -450,6 +451,14 @@
     <script type="text/javascript" src="assets/js/mapData.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            if ($(window).width() < 800) {
+                $('body').prop('zoom', .5);
+                document.getElementsByTagName("body")[0].removeAttribute("style");
+                //var scale = 'scale(.5)';
+//document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
+ //document.body.style.msTransform =   scale;       // IE 9
+ //document.body.style.transform = scale;
+            }
             $(".subwaymap").subwayMap({ debug: false });
             captureEvents();
             var element = $('#subwaymap');

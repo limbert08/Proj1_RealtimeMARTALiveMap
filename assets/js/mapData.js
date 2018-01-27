@@ -14,6 +14,7 @@ function getResponse(station) {
     
   database.ref().on("value", function(martadata) {
     $("#targetbody").html("");
+    console.log(martadata.val().trains);
     console.clear();
     var martadata = martadata.val().trains;
     stationSearch(martadata, station);
