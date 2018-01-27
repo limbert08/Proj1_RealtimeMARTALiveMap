@@ -156,6 +156,7 @@ function setCanvasEvent() {
 }
 
 function captureEvents() {
+  $(".subwaymap").subwayMap({ debug: false });
   $('.canvas').off('click touchstart');
   $('.canvas').on('click touchstart', function(e) {
      $('#toast').css('left',e.pageX + 'px' );
@@ -227,15 +228,4 @@ function toast(test, e) {
         x.className = x.className.replace("show", ""); 
       }, 10000);  
     } 
-}
-
-function adjustView() {
-  $('#subwaymap').attr('data-cellSize', 40);
-  $('#subwaymap').attr('data-lineWidth', 6);
-  $('#subwaymapinvisible').attr('data-cellSize', 40);
-  $('#subwaymapinvisible').attr('data-lineWidth', 6);
-  $('#invisibleMap').attr('data-cellSize', 40);
-  $('#invisibleMap').attr('data-lineWidth', 6);
-  $('#trainRoutes').attr('data-cellSize', 40);
-  $('#trainRoutes').attr('data-lineWidth', 6);
 }

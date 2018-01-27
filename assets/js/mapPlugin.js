@@ -84,13 +84,13 @@ var stations = [];
         else
             columns = parseInt(columns);
 
-        var scale = el.attr("data-cellSize");
+        var scale = el.attr("data-cellsize");
         if (scale === undefined)
             scale = 100;
         else
             scale = parseInt(scale);
 
-        var lineWidth = el.attr("data-lineWidth");
+        var lineWidth = el.attr("data-linewidth");
         if (lineWidth === undefined)
             lineWidth = 10;
         else

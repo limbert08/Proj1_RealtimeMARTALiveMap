@@ -108,10 +108,10 @@
     </div>
     <!-- End mark-up for Materialize-based sideNav component -->
     
-    <div class="trainRoutes" style="display:none" id="trainRoutes" data-columns="12" data-rows="10" data-cellSize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="8">
+    <div class="trainRoutes" style="display:none" id="trainRoutes" data-columns="12" data-rows="10" data-cellsize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-linewidth="8">
 
     </div>
-    <div class="subwaymap" id="subwaymap" data-columns="12" data-rows="10" data-cellSize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="12">
+    <div class="subwaymap" id="subwaymap" data-columns="12" data-rows="10" data-cellsize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-linewidth="12">
         <!-- Red Line -->
         <ul data-color="#FFB6C1" id="RED" class="RED" data-label="MARTA Red Line">      
             <li data-coords="5.5,0.4" class="stations" data-textClass="visibleText" data-line="RED" data-marker="interchange" data-station="NORTH SPRINGS STATION" data-labelPos="W"><a href="#">North Springs</a></li> 
@@ -189,7 +189,7 @@
             <li data-coords="6.35,5.95" class="stations" data-line="GREEN" data-marker="interchange" data-station="EDGEWOOD STATION" data-labelPos="N"></li>
         </ul>
     </div>
-    <div class="subwaymapinvisible" id="subwaymapinvisible" style="display:none" data-columns="12" data-rows="10" data-cellSize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="12">
+    <div class="subwaymapinvisible" id="subwaymapinvisible" style="display:none" data-columns="12" data-rows="10" data-cellsize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-linewidth="12">
         <!-- Red Line -->
         <ul data-color="#FFB6C1" id="RED" class="RED" data-label="MARTA Red Line">      
             <li data-coords="5.5,0.4" class="stations" data-textClass="visibleText" data-line="RED" data-marker="interchange" data-station="NORTH SPRINGS STATION" data-labelPos="W"><a href="#">North Springs</a></li> 
@@ -267,7 +267,7 @@
             <li data-coords="6.35,5.95" class="stations" data-line="GREEN" data-marker="interchange" data-station="EDGEWOOD STATION" data-labelPos="N"></li>
         </ul>
     </div>
-    <div class="invisibleMap" style="display:none" data-columns="12" data-rows="10" data-cellSize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="8">
+    <div class="invisibleMap" style="display:none" data-columns="12" data-rows="10" data-cellsize="80" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-linewidth="8">
         <!-- Red Train -->
         <ul data-color="#ff0000" id="redTrain" class="redTrain" data-label="Train A">      
             <li data-coords="5.5,.4" class="stations" data-station="NORTH SPRINGS STATION" data-labelPos="W"> </li> 
@@ -449,10 +449,8 @@
     <script type="text/javascript" src="assets/js/mapPlugin.js"></script>
     <script type="text/javascript" src="assets/js/mapData.js"></script>
     <script type="text/javascript">
-        //adjustView();
-        $(".subwaymap").subwayMap({ debug: false });
         $(document).ready(function() {
-            //setCanvasEvent();
+            $(".subwaymap").subwayMap({ debug: false });
             captureEvents();
             var element = $('#subwaymap');
             moveToastLinks(element);
