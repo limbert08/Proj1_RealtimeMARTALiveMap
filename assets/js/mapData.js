@@ -158,12 +158,18 @@ function setCanvasEvent() {
 function captureEvents() {
   $('.canvas').off('click mousemove touchstart');
   $('.canvas').on('click mousemove touchstart', function(e) {
+     $('#toast').css('left',e.pageX + 'px' );
+     $('#toast').css('top',e.pageY + 'px' );
     var x = e.clientX
     , y = e.clientY
     //...
     var stations = JSON.parse(localStorage.getItem("stations"));
         for (z = 0; z < stations.length; z++) {
-          var isClicked = isInCircle(stations[z][0], stations[z][1], stations[z][2], x, y);
+          if (e.type  == 'touchstart') {
+            var isClicked = isInCircle(stations[z][0], stations[z][1], stations[z][2], (x+10), (y+10));
+          } else {
+            var isClicked = isInCircle(stations[z][0], stations[z][1], stations[z][2], x, y);
+          }
           if (isClicked == true) {
             var tempString = stations[z][3].toProperCase();
             tempString = tempString.substring(0, tempString.lastIndexOf(" "));
