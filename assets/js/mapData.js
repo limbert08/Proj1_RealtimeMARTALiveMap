@@ -222,9 +222,17 @@ function toast(test) {
     
     var x = document.getElementById('toast');
     x.className = "show";
-    setTimeout(function(){ 
+    if (e.type  == 'touchstart') {
+      setTimeout(function(){ 
       $('.text').css('opacity', 0);
       $('.text').css('display', 'none');
       x.className = x.className.replace("show", ""); 
-    }, 10000); 
+    }, 5000);
+    } else {
+      setTimeout(function(){ 
+        $('.text').css('opacity', 0);
+        $('.text').css('display', 'none');
+        x.className = x.className.replace("show", ""); 
+      }, 10000);  
+    } 
 }
