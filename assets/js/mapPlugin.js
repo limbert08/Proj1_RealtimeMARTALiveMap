@@ -381,7 +381,7 @@ var stations = [];
             ctx.lineWidth = 4;
         } else {
             //ctx.lineWidth = width;
-            ctx.lineWidth = 12;
+            ctx.lineWidth = width;
         }
         ctx.stroke();
 
@@ -414,7 +414,7 @@ var stations = [];
             fgColor = "#ffffff";
             bgColor = "#000000";
         }
-        width = 8;
+        width = width-2;
         // Render station and interchange icons
         ctx.strokeStyle = fgColor;
         ctx.fillStyle = bgColor;

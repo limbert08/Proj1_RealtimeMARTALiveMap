@@ -182,16 +182,6 @@ function captureEvents() {
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
-        
-function makeStationNamesVisible() {
-  $('#NorthSprings').css('opacity', 1);
-  //$('#FivePoints').css('display', 'block');
-  $('#Doraville').css('opacity', 1);
-  $('#Airport').css('opacity', 1);
-  $('#Bankhead').css('opacity', 1);
-  $('#IndianCreek').css('opacity', 1);
-  $('#HamiltonEHolmes').css('opacity', 1);
-}
 
 function moveToastLinks(element) {
   $('#toast').empty();
@@ -212,6 +202,7 @@ function toast(test, e) {
       $('#trainRoutes').empty();
       $(test).css('opacity', 0);
       $(test).css('display', 'none');
+      $('#toast').css('visibility', 'hidden');
       //e.preventDefault(); 
       //e.stopImmediatePropagation();
       getResponse($(test).text().toUpperCase() + ' STATION');
@@ -235,4 +226,15 @@ function toast(test, e) {
         x.className = x.className.replace("show", ""); 
       }, 10000);  
     } 
+}
+
+function adjustView() {
+  $('#subwaymap').attr('data-cellSize', 40);
+  $('#subwaymap').attr('data-lineWidth', 6);
+  $('#subwaymapinvisible').attr('data-cellSize', 40);
+  $('#subwaymapinvisible').attr('data-lineWidth', 6);
+  $('#invisibleMap').attr('data-cellSize', 40);
+  $('#invisibleMap').attr('data-lineWidth', 6);
+  $('#trainRoutes').attr('data-cellSize', 40);
+  $('#trainRoutes').attr('data-lineWidth', 6);
 }

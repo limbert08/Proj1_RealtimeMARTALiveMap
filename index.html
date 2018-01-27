@@ -21,9 +21,9 @@
         padding-top: -10px;
         text-decoration: none;
         font-size: 14px;
-        /*opacity:0; 
-        transition: all .3s ease;
-        display: none;*/
+        opacity:0; 
+        /*transition: all .3s ease;*/
+        display: none;
     }
     /* The snackbar - position it at the bottom and in the middle of the screen */
     #toast {
@@ -449,8 +449,8 @@
     <script type="text/javascript" src="assets/js/mapPlugin.js"></script>
     <script type="text/javascript" src="assets/js/mapData.js"></script>
     <script type="text/javascript">
+        adjustView();
         $(".subwaymap").subwayMap({ debug: false });
-        makeStationNamesVisible();
         $(document).ready(function() {
             //setCanvasEvent();
             captureEvents();
