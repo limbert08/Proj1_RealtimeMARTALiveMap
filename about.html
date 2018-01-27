@@ -16,12 +16,32 @@
         <div class="nav-wrapper container">
             <a id="logo-container" href="#" class="brand-logo">PumpkinSquirrelJuice</a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="#">Home</a></li>
+                <li><a href="index.html">Clickable Train Map</a></li>
+                <li><a href="all-trains.html">All Trains</a></li>
             </ul>
+
             <ul id="nav-mobile" class="side-nav">
-                <li><a href="#">Home</a></li>
+                    <li>
+                        <div class="user-view">
+                            <div class="background">
+                                <img src="assets/images/2.png">
+                            </div>
+                            <a href="#!user"><img class="circle" src="assets/images/marta.jpg"></a>
+                            <!-- a few placeholder links for possible later use -->
+                            <a href="#!name"><span class="black-text name"></span></a>
+                            <a href="#!email"><span class="black-text email"></span></a>
+                            <a href="#!name"><span class="black-text name"></span></a>
+                            <a href="#!email"><span class="black-text email"></span></a>
+                            <a href="#!name"><span class="black-text name"></span></a>
+                            <a href="#!email"><span class="black-text email"></span></a>
+                        </div>
+                    </li>
+                    <li><a class="waves-effect" href="index.html"><i class="material-icons">map</i>Clickable Train Map</a></li>
+                    <li><a class="waves-effect" href="all-trains.html"><i class="material-icons">train</i>All Trains</a></li>
+                    <li><a class="waves-effect" href="about.html"><i class="material-icons">group</i>About</a></li>
             </ul>
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
         </div>
     </nav>
     <!-- Begin Section with first Picture -->
@@ -193,6 +213,12 @@
     $(document).ready(function() {
         //$('.carousel').carousel();
         $('.carousel.carousel-slider').carousel({fullWidth: true});
+        $(".button-collapse").sideNav({
+        menuWidth: 300, // Default is 300
+        edge: 'left', // Choose the horizontal origin // Default is left
+        closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        draggable: true, // Choose whether you can drag to open on touch screens,
+        });
     });
     </script>
 
