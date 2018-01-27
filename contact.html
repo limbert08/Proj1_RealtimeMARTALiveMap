@@ -13,6 +13,41 @@
 </head>
 
 <body>
+    <!-- Begin mark-up for Materialize-based sideNav component -->
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo">PumpkinSquirrelJuice</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="index.html">Clickable Train Map</a></li>
+                <li><a href="all-trains.html">All Trains</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li>
+                    <div class="user-view">
+                        <div class="background">
+                            <img src="assets/images/2.png">
+                        </div>
+                        <a href="#!user"><img class="circle" src="assets/images/marta.jpg"></a>
+                        <!-- a few placeholder links for possible later use -->
+                        <a href="#!name"><span class="black-text name"></span></a>
+                        <a href="#!email"><span class="black-text email"></span></a>
+                        <a href="#!name"><span class="black-text name"></span></a>
+                        <a href="#!email"><span class="black-text email"></span></a>
+                        <a href="#!name"><span class="black-text name"></span></a>
+                        <a href="#!email"><span class="black-text email"></span></a>
+                    </div>
+                </li>
+                <li><a class="waves-effect" href="index.html"><i class="material-icons">map</i>Clickable Train Map</a></li>
+                <li><a class="waves-effect" href="all-trains.html"><i class="material-icons">train</i>All Trains</a></li>
+                <li><a class="waves-effect" href="about.html"><i class="material-icons">group</i>About</a></li>
+                <li><a class="waves-effect" href="contact.html"><i class="material-icons">group</i>Contact Us</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        </div>
+    </nav>
     <div class="container">
         <div class="row">
             <div class="col m10 offset-m1 s12">
@@ -113,5 +148,16 @@
             </div>
         </div>
     </div>
+    <footer class="page-footer amber accent-3">
+        <div class="footer-copyright">
+            <div class="container">
+                A Project From <a class="brown-text text-lighten-3" href="https://github.com/limbert08/Proj1_PumpkinSquirrelJuice">Team PumpkinSquirrelJuice</a>
+            </div>
+        </div>
+    </footer>
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="assets/js/materialize.js"></script>
+    <script src="assets/js/init.js"></script>
 </body>
 </html>
