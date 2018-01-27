@@ -195,6 +195,7 @@ function moveToastLinks(element) {
 function toast(test, e) {
     $('.text').css('opacity', 0);
     $('.text').css('display', 'none');
+    $('#toast').css('visibility', 'visible');
     $(test).css('opacity', 1);
     $(test).css('display', 'block');
     $(test).css('z-index', 999999999);
@@ -203,8 +204,8 @@ function toast(test, e) {
       $(test).css('opacity', 0);
       $(test).css('display', 'none');
       $('#toast').css('visibility', 'hidden');
-      //e.preventDefault(); 
-      //e.stopImmediatePropagation();
+      e.preventDefault(); 
+      e.stopImmediatePropagation();
       getResponse($(test).text().toUpperCase() + ' STATION');
       localStorage.clear();
       $('.canvas').off('click mousemove touchstart');

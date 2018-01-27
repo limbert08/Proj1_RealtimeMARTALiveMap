@@ -610,10 +610,10 @@ var fgColor = "#ff0000";
         var bgColor = "#00ff00";
         
   ctx.beginPath();
-  ctx.arc(x, (y-15), width * 1.5, 0, Math.PI * 2, true);
+  ctx.arc(x, (y), width * 1.5, 0, Math.PI * 2, true);
   
   ctx.closePath();
-  if (ctx.isPointInPath(clickX, (clickY-15))) {
+  if (ctx.isPointInPath(clickX, (clickY))) {
     return true;
   }
   //ctx.stroke();
